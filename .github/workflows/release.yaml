@@ -16,7 +16,9 @@ jobs:
   create-release:
     name: 🎁 Create release
     runs-on: ubuntu-22.04
-    permissions: write-all
+    permissions:
+      deployments: write
+      contents: write
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -39,7 +41,8 @@ jobs:
     name: 📦 NPM release
     runs-on: ubuntu-22.04
     needs: create-release
-
+    permissions:
+      id-token: write
     steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
