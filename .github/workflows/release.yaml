@@ -1,0 +1,60 @@
+name: 🎁 Create release
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        type: string
+        description: 'Release version formatted as "vMM.mm.pp"'
+        required: true
+
+jobs:
+  create-release:
+    name: 🎁 Create release
+    runs-on: ubuntu-22.04
+    permissions: write-all
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+            ref: ${{ inputs.release_version }}
+
+      - name: 📰 Generate RELEASE.md
+        run: |
+          echo "See the [README.md](${{ github.server_url }}/${{ github.repository }}/blob/main/README.md)" > RELEASE.md
+
+      - name: 🚀 Publish release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ inputs.release_version }}
+          bodyFile: ./RELEASE.md
+
+  npm-release:
+    name: 📦 NPM release
+    runs-on: ubuntu-22.04
+    needs: create-release
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ inputs.release_version }}
+      
+    - name: 🛠️ NodeJS setup
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        registry-url: https://registry.npmjs.org
+
+    - name: 🔧 Install dependencies and run
+      run: npm ci && npm run start
+
+    - name: 🚀 Publish package on NPM
+      run: npm run pub -- --provenance

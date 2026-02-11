@@ -1,0 +1,25 @@
+{
+  "name": "npm-demo-2fa",
+  "version": "1.0.1",
+  "description": "Demo NPM package to make 2FA work with GitHub Actions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "npm publish ./ --access=public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/planetsLightningArrester/npm-demo-2fa.git"
+  },
+  "keywords": [
+    "demo",
+    "2fa"
+  ],
+  "author": "planetsLightningArrester",
+  "license": "GNU GPLv3",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=17.0.0"
+  }
+}
