@@ -1,6 +1,6 @@
 {
   "name": "npm-demo-2fa",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Demo NPM package to make 2FA work with GitHub Actions",
   "main": "index.js",
   "scripts": {
